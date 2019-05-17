@@ -11,7 +11,8 @@ Name:		treedec
 Version:	0.9.0
 %define	gitref	aceed466aebd2e9f898172f3a5c3d9f481dfdb63
 %define	snap	20181209
-Release:	1
+%define	rel	1
+Release:	1.%{snap}.%{rel}
 License:	GPL v2, GPL v3
 Group:		Libraries
 #Source0Download: https://github.com/freetdi/tdlib/releases
@@ -146,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with python3}
 %files -n python3-tdlib
 %defattr(644,root,root,755)
-%dir %{py_sitedir}/tdlib
+%dir %{py3_sitedir}/tdlib
 %attr(755,root,root) %{py3_sitedir}/tdlib/cytdlib.so
 %{py3_sitedir}/tdlib/*.py
 %{py3_sitedir}/tdlib/__pycache__
