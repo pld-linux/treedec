@@ -1,0 +1,48 @@
+--- tdlib-aceed466aebd2e9f898172f3a5c3d9f481dfdb63/tdlib/Makefile.am.orig	2018-12-08 15:21:03.000000000 +0100
++++ tdlib-aceed466aebd2e9f898172f3a5c3d9f481dfdb63/tdlib/Makefile.am	2019-05-16 21:23:54.840906287 +0200
+@@ -2,7 +2,7 @@
+ 
+ SUBDIRS = . tests
+ 
+-instdir = $(pythondir)/tdlib
++instdir = $(pyexecdir)/tdlib
+ inst_PYTHON = \
+ 	__init__.py \
+ 	graphs.py \
+@@ -22,7 +22,7 @@
+ .PHONY: clean-extra symlinks
+ 
+ AM_CXXFLAGS = -pthread -Wl,-O1 -Wl,-Bsymbolic-functions \
+-              -fno-strict-aliasing -g -fwrapv -O2 -Wall \
++              -fno-strict-aliasing -fwrapv -Wall \
+               -Wformat -Werror=format-security
+ 
+ longcheck: all-am
+@@ -41,7 +41,7 @@
+ 	ln -sf $(srcdir)/__init__.py
+ 
+ AM_CPPFLAGS = @PYTHON_INCLUDES@ -I$(top_srcdir)/src
+-AM_LDFLAGS = -module -omit-version
++AM_LDFLAGS = -module -avoid-version
+ 
+ EXTRA_DIST = \
+ 	graphs.py \
+--- tdlib-aceed466aebd2e9f898172f3a5c3d9f481dfdb63/m4/am_check_python_headers.m4.orig	2018-12-08 15:21:03.000000000 +0100
++++ tdlib-aceed466aebd2e9f898172f3a5c3d9f481dfdb63/m4/am_check_python_headers.m4	2019-05-16 22:03:42.884635811 +0200
+@@ -5,12 +5,16 @@
+  [AC_REQUIRE([AM_PATH_PYTHON])
+  AC_MSG_CHECKING(for headers required to compile python extensions)
+  dnl deduce PYTHON_INCLUDES
++ if test -n "$PYTHON_INCLUDE_DIR"; then
++   PYTHON_INCLUDES="-I$PYTHON_INCLUDE_DIR"
++ else
+  py_prefix=`$PYTHON -c "import sys; print(sys.prefix)"`
+  py_exec_prefix=`$PYTHON -c "import sys; print(sys.exec_prefix)"`
+  PYTHON_INCLUDES="-I${py_prefix}/include/python${PYTHON_VERSION}"
+  if test "$py_prefix" != "$py_exec_prefix"; then
+   PYTHON_INCLUDES="$PYTHON_INCLUDES -I${py_exec_prefix}/include/python${PYTHON_VERSION}"
+  fi
++ fi
+  AC_SUBST(PYTHON_INCLUDES)
+  dnl check if the headers exist:
+  save_CPPFLAGS="$CPPFLAGS"
