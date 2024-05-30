@@ -18,15 +18,6 @@
                -Wformat -Werror=format-security
  
  longcheck: all-am
-@@ -41,7 +41,7 @@
- 	ln -sf $(srcdir)/__init__.py
- 
- AM_CPPFLAGS = @PYTHON_INCLUDES@ -I$(top_srcdir)/src
--AM_LDFLAGS = -module -omit-version
-+AM_LDFLAGS = -module -avoid-version
- 
- EXTRA_DIST = \
- 	graphs.py \
 --- tdlib-aceed466aebd2e9f898172f3a5c3d9f481dfdb63/m4/am_check_python_headers.m4.orig	2018-12-08 15:21:03.000000000 +0100
 +++ tdlib-aceed466aebd2e9f898172f3a5c3d9f481dfdb63/m4/am_check_python_headers.m4	2019-05-16 22:03:42.884635811 +0200
 @@ -5,12 +5,16 @@
@@ -46,3 +37,13 @@
   AC_SUBST(PYTHON_INCLUDES)
   dnl check if the headers exist:
   save_CPPFLAGS="$CPPFLAGS"
+--- tdlib-a494876a8b168b50fc1dfca2f26b6e10878158b6/configure.ac.orig	2023-09-12 02:00:00.000000000 +0200
++++ tdlib-a494876a8b168b50fc1dfca2f26b6e10878158b6/configure.ac	2024-05-30 13:27:11.377741172 +0200
+@@ -115,7 +115,6 @@ AS_IF([test "$python" != no], [
+       AC_MSG_RESULT([not identified])
+ 	 ])
+     unset cythonver
+-	 cython=no
+ 	)
+ ])
+ 

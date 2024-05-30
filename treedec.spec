@@ -8,25 +8,25 @@ Summary:	Tree decomposition algorithms
 Summary(pl.UTF-8):	Algorytmy do rozkładu drzewiastego
 Name:		treedec
 # configure.ac /AC_INIT
-Version:	0.9.0
-%define	gitref	aceed466aebd2e9f898172f3a5c3d9f481dfdb63
-%define	snap	20181209
-%define	rel	7
+Version:	0.9.2
+%define	gitref	a494876a8b168b50fc1dfca2f26b6e10878158b6
+%define	snap	20230913
+%define	rel	1
 Release:	1.%{snap}.%{rel}
 License:	GPL v2, GPL v3
 Group:		Libraries
 #Source0Download: https://github.com/freetdi/tdlib/releases
 Source0:	https://github.com/freetdi/tdlib/archive/%{gitref}/%{name}-%{snap}.tar.gz
-# Source0-md5:	dedb02819869f08c1035d23f47883d69
+# Source0-md5:	50b30aa52534c988d59a5e5b43e1fa9d
 Patch0:		%{name}-python.patch
 URL:		https://github.com/freetdi/tdlib
 BuildRequires:	autoconf >= 2.69
 BuildRequires:	automake
-BuildRequires:	boost-devel >= 1.55
+BuildRequires:	boost-devel >= 1.62
 %{?with_gala:BuildRequires:	freetdi-gala-devel}
 BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	libtool >= 2:2
-BuildRequires:	stx-btree-devel
+BuildRequires:	tlx-devel
 %if %{with python2}
 BuildRequires:	python-Cython >= 0.20.0
 BuildRequires:	python-devel >= 1:2.7
@@ -48,7 +48,9 @@ Summary:	Tree decomposition algorithms
 Summary(pl.UTF-8):	Algorytmy do rozkładu drzewiastego
 License:	Boost v1.0
 Group:		Development/Libraries
+Requires:	boost-devel >= 1.62
 Requires:	libstdc++-devel >= 6:4.7
+Requires:	tlx-devel
 
 %description devel
 treedec provides tree decomposition algorithms.
