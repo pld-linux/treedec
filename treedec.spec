@@ -82,7 +82,7 @@ Moduł do rozkładu drzewiastego dla Pythona 3.
 
 %prep
 %setup -q -n tdlib-%{gitref}
-%patch0 -p1
+%patch -P 0 -p1
 
 %build
 %{__libtoolize}
