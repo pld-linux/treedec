@@ -11,7 +11,7 @@ Name:		treedec
 Version:	0.9.2
 %define	gitref	a494876a8b168b50fc1dfca2f26b6e10878158b6
 %define	snap	20230913
-%define	rel	2
+%define	rel	3
 Release:	1.%{snap}.%{rel}
 License:	GPL v2, GPL v3
 Group:		Libraries
