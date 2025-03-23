@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_with	gala	# use gala graph functions (broken build when using gala snapshot 20181110 + boost 1.70)
-%bcond_without	python2	# CPython 2.x module
+%bcond_with	python2	# CPython 2.x module
 %bcond_without	python3	# CPython 3.x module
 #
 Summary:	Tree decomposition algorithms
@@ -11,7 +11,7 @@ Name:		treedec
 Version:	0.9.2
 %define	gitref	a494876a8b168b50fc1dfca2f26b6e10878158b6
 %define	snap	20230913
-%define	rel	3
+%define	rel	4
 Release:	1.%{snap}.%{rel}
 License:	GPL v2, GPL v3
 Group:		Libraries
@@ -90,9 +90,12 @@ Moduł do rozkładu drzewiastego dla Pythona 3.
 %{__autoconf}
 %{__autoheader}
 %{__automake}
+
+%if %{with python2}
 install -d build-py2
 cd build-py2
-../%configure \
+%define configuredir ..
+%configure \
 	--disable-static \
 	%{!?with_gala:--without-gala} \
 	--with-python-include-dir=%{py_incdir} \
@@ -100,11 +103,13 @@ cd build-py2
 
 %{__make}
 cd ..
+%endif
 
 %if %{with python3}
 install -d build-py3
 cd build-py3
-../%configure \
+%define configuredir ..
+%configure \
 	PYTHON=%{__python3} \
 	--disable-static \
 	%{!?with_gala:--without-gala} \
@@ -124,11 +129,13 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{py3_sitedir}/tdlib/cytdlib.la
 %endif
 
+%if %{with python2}
 %{__make} -C build-py2 install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{py_sitedir}/tdlib/cytdlib.la
 %py_postclean
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
